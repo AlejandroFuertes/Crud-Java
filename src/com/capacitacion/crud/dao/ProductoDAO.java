@@ -56,12 +56,62 @@ public class ProductoDAO {
 		return null;
 	}
 	
-	public Boolean updateProduct(Producto producto) {
-		return null;
+	public Boolean updateProduct(Producto producto) throws SQLException {
+		
+		estadoOperacion = false;
+		String sql = null;
+		
+		try {
+			connection = obtenerConexion();
+			connection.setAutoCommit(false);
+			
+			sql = "UPDATE productos SET nombre = ?, cantidad = ?, precio = ?, fecha_actualizar = ? WHERE id = ?";
+			
+			preparedStatement = connection.prepareStatement(sql);
+			
+			preparedStatement.setString(1, producto.getNombre());
+			preparedStatement.setDouble(2, producto.getCantidad());
+			preparedStatement.setDouble(3, producto.getPrecio());
+			preparedStatement.setDate(4, (Date) producto.getFechaActualizar());
+			preparedStatement.setInt(5, producto.getId());
+			
+			estadoOperacion = preparedStatement.executeUpdate() > 0;
+			
+			connection.commit();
+			preparedStatement.close();
+			connection.close();
+			
+		}catch (SQLException e) {
+			connection.rollback();
+			e.printStackTrace();
+		}
+		return estadoOperacion;
 	}
 	
-	public Boolean deleteProduct(Integer id) {
-		return null;
+	public Boolean deleteProduct(Integer id) throws SQLException {
+		
+		estadoOperacion = false;
+		String sql = null;
+		
+		try {
+			connection = obtenerConexion();
+			connection.setAutoCommit(false);
+			sql = "DELETE FROM productos WHERE id = ?";
+			
+			preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setInt(1, id);
+			
+			estadoOperacion = preparedStatement.executeUpdate(sql) > 0;
+			connection.commit();
+			preparedStatement.close();
+			connection.close();
+			
+		} catch (SQLException e) {
+			connection.rollback();
+			e.printStackTrace();
+		}
+		
+		return estadoOperacion;
 	}
 	
 	public List<Producto> getProducts() throws SQLException {
@@ -75,7 +125,7 @@ public class ProductoDAO {
 		try {			
 			connection = obtenerConexion();
 			
-			sql = "SELECT * FROM PRODUCTOS";
+			sql = "SELECT * FROM productos";
 			preparedStatement = connection.prepareStatement(sql);
 			resultSet = preparedStatement.executeQuery(sql);
 			
@@ -100,7 +150,36 @@ public class ProductoDAO {
 	}
 	
 	public Producto getProduct(Integer id) {
-		return null;
+		
+		Producto producto = new Producto();
+		ResultSet resultSet = null;
+		estadoOperacion = false;
+		String sql = null;
+		
+		try {
+			connection = obtenerConexion();
+			sql = "SELECT * FROM productos WHERE id = ?";
+			
+			preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setInt(1, id);
+			
+			resultSet = preparedStatement.executeQuery(sql);
+			
+			if(resultSet.next()) {
+				
+				producto.setId(resultSet.getInt(1));
+				producto.setNombre(resultSet.getString(2));
+				producto.setCantidad(resultSet.getDouble(3));
+				producto.setPrecio(resultSet.getDouble(4));
+				producto.setFechaCrear(resultSet.getDate(5));
+				producto.setFechaActualizar(resultSet.getDate(6));
+			}
+			
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return producto;
 	}
 	
 	//OBTENER EL POOL DE CONEXION
