@@ -22,7 +22,7 @@
 
 		<c:forEach var="producto" items="${lista}">
 			<tr>
-				<td> <c:out value="${producto.id}"></c:out>	</td>
+				<td> <a href="productos?opcion=mostrarEditar&id=<c:out value="${producto.id}"></c:out>">  <c:out value="${producto.id}"></c:out></a>	</td>
 				<td> <c:out value="${producto.nombre}"></c:out>	</td>
 				<td> <c:out value="${producto.cantidad}"></c:out>	</td>
 				<td> <c:out value="${producto.precio}"></c:out>	</td>

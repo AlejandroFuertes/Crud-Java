@@ -22,82 +22,102 @@ import com.capacitacion.crud.model.Producto;
 @WebServlet(description = "administra peticiones para la tabla productos", urlPatterns = { "/productos" })
 public class ProductoController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public ProductoController() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#HttpServlet()
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+	public ProductoController() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
 		String opcion = request.getParameter("opcion");
-		
-		if(opcion.equals("crear")) {
-			
+
+		if (opcion.equals("crear")) {
+
 			System.out.println("Selecciono la opcion crear");
 			RequestDispatcher requestDispatcher = request.getRequestDispatcher("views/crear.jsp");
 			requestDispatcher.forward(request, response);
-		}else {
-			if(opcion.equals("listar")) {
+		} else {
+			if (opcion.equals("listar")) {
 				ProductoDAO productoDAO = new ProductoDAO();
 				List<Producto> lista = new ArrayList<>();
-				
+
 				try {
 					lista = productoDAO.getProducts();
-					
-					//IMPRIMO LOS PRODUCTOS EN CONSOLA
+
+					// IMPRIMO LOS PRODUCTOS EN CONSOLA
 					for (Producto producto : lista) {
 						System.out.println(producto);
 					}
-					
-					/*SET ATTRIBUTE ENVIA DATOS AL JSP CON UNA CLAVE*/
+
+					/* SET ATTRIBUTE ENVIA DATOS AL JSP CON UNA CLAVE */
 					request.setAttribute("lista", lista);
 					RequestDispatcher requestDispatcher = request.getRequestDispatcher("views/listar.jsp");
 					requestDispatcher.forward(request, response);
-				}catch (Exception e) {
-					
+				} catch (Exception e) {
+
 				}
-				
-				
+
 				System.out.println("Usted selecciono la opcion Listar");
-//				RequestDispatcher requestDispatcher = request.getRequestDispatcher("views/listar.jsp");
+			} else {
+				if (opcion.equals("mostrarEditar")) {
+
+					int id = Integer.parseInt(request.getParameter("id"));
+					System.out.println("Editar id: " + id);
+					
+					ProductoDAO productoDAO = new ProductoDAO();
+					Producto producto = new Producto();
+					
+					try {
+						producto = productoDAO.getProduct(id);
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					System.out.println(producto);
+					
+				} 
 			}
 		}
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
 		String opcion = request.getParameter("opcion");
 		Date fechaActual = new Date();
-		
+
 		ProductoDAO productoDAO = new ProductoDAO();
 		Producto producto = new Producto();
-		
+
 		producto.setNombre(request.getParameter("nombre"));
 		producto.setCantidad(Double.parseDouble(request.getParameter("cantidad")));
 		producto.setPrecio(Double.parseDouble(request.getParameter("precio")));
-		
-		/*SETEAMOS LA FECHA ACTUAL*/
+
+		/* SETEAMOS LA FECHA ACTUAL */
 		producto.setFechaCrear(new java.sql.Date(fechaActual.getTime()));
-		
+
 		try {
 			productoDAO.createProduct(producto);
 			System.out.println("Registro guardado satisfactoriamente");
 			RequestDispatcher requestDispatcher = request.getRequestDispatcher("/index.jsp");
 			requestDispatcher.forward(request, response);
-		}catch (SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
+
 	}
 
 }
