@@ -24,9 +24,9 @@ public class ProductoDAO {
 		
 		String sql;
 		estadoOperacion = false;
+		connection = obtenerConexion();
 		
 		try {
-			connection = obtenerConexion();
 			
 			connection.setAutoCommit(false);
 			
@@ -60,9 +60,9 @@ public class ProductoDAO {
 		
 		estadoOperacion = false;
 		String sql = null;
+		connection = obtenerConexion();
 		
 		try {
-			connection = obtenerConexion();
 			connection.setAutoCommit(false);
 			
 			sql = "UPDATE productos SET nombre = ?, cantidad = ?, precio = ?, fecha_actualizar = ? WHERE id = ?";
@@ -92,9 +92,9 @@ public class ProductoDAO {
 		
 		estadoOperacion = false;
 		String sql = null;
+		connection = obtenerConexion();
 		
 		try {
-			connection = obtenerConexion();
 			connection.setAutoCommit(false);
 			sql = "DELETE FROM productos WHERE id = ?";
 			
@@ -121,13 +121,13 @@ public class ProductoDAO {
 		
 		String sql = null;
 		estadoOperacion = false;
+		connection = obtenerConexion();
 		
 		try {			
-			connection = obtenerConexion();
 			
 			sql = "SELECT * FROM productos";
 			preparedStatement = connection.prepareStatement(sql);
-			resultSet = preparedStatement.executeQuery(sql);
+			resultSet = preparedStatement.executeQuery();
 			
 			while(resultSet.next()) {
 				
@@ -149,21 +149,21 @@ public class ProductoDAO {
 		return listaProductos;
 	}
 	
-	public Producto getProduct(Integer id) {
+	public Producto getProduct(Integer id) throws SQLException {
 		
 		Producto producto = new Producto();
 		ResultSet resultSet = null;
 		estadoOperacion = false;
 		String sql = null;
 		
+		connection = obtenerConexion();
 		try {
-			connection = obtenerConexion();
 			sql = "SELECT * FROM productos WHERE id = ?";
 			
 			preparedStatement = connection.prepareStatement(sql);
 			preparedStatement.setInt(1, id);
 			
-			resultSet = preparedStatement.executeQuery(sql);
+			resultSet = preparedStatement.executeQuery();
 			
 			if(resultSet.next()) {
 				

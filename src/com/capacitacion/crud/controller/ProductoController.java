@@ -76,7 +76,14 @@ public class ProductoController extends HttpServlet {
 					ProductoDAO productoDAO = new ProductoDAO();
 					Producto producto = new Producto();
 					
-					producto = productoDAO.getProduct(id);
+					try {
+						producto = productoDAO.getProduct(id);
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					System.out.println(producto);
+					
 				} 
 			}
 		}
