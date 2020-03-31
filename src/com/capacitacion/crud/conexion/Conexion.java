@@ -21,7 +21,7 @@ public class Conexion {
 			dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
 			dataSource.setUsername("root");
 			dataSource.setPassword("vamospormas");
-			dataSource.setUrl("jdbc:mysql://localhost:3306/crud?useTimezone=true&serverTimezone=UTC&useSSL=false");
+			dataSource.setUrl("jdbc:mysql://localhost:3306/crud?useTimezone=true&serverTimezone=America/Argentina/Buenos_Aires&useSSL=false");
 			
 			//INICIA EL DATASOURCE
 			dataSource.setInitialSize(20);

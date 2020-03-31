@@ -2,10 +2,9 @@ package com.capacitacion.crud.controller;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.time.LocalDate;
-import java.util.List;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -92,6 +91,24 @@ public class ProductoController extends HttpServlet {
 						e.printStackTrace();
 					}
 
+				}else {
+					if(opcion.equals("eliminar")) {
+						
+						ProductoDAO productoDAO = new ProductoDAO();
+						
+						Integer id = Integer.parseInt(request.getParameter("id"));
+						
+						try {
+							productoDAO.deleteProduct(id);
+							System.out.println("Registro eliminado correctamente");
+							
+							RequestDispatcher requestDispatcher = request.getRequestDispatcher("/index.jsp");
+							requestDispatcher.forward(request, response);
+						} catch (SQLException e) {
+							e.printStackTrace();
+						}
+						
+					}
 				}
 			}
 		}
