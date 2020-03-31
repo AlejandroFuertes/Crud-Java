@@ -87,7 +87,6 @@ public class ProductoController extends HttpServlet {
 						requestDispatcher.forward(request, response);
 
 					} catch (SQLException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 

@@ -101,7 +101,7 @@ public class ProductoDAO {
 			preparedStatement = connection.prepareStatement(sql);
 			preparedStatement.setInt(1, id);
 			
-			estadoOperacion = preparedStatement.executeUpdate(sql) > 0;
+			estadoOperacion = preparedStatement.executeUpdate() > 0;
 			connection.commit();
 			preparedStatement.close();
 			connection.close();

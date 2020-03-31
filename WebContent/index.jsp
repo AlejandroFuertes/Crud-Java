@@ -18,9 +18,6 @@
 		<td> <a href="productos?opcion=listar"> Listar Productos </a></td>
 	</tr>
 	<tr>
-		<td> Eliminar Producto </td>
-	</tr>
-	<tr>
 		<td> Obtener un Producto </td>
 	</tr>
 	
