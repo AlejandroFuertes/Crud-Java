@@ -2,6 +2,7 @@ package com.capacitacion.crud.controller;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Date;
@@ -72,19 +73,26 @@ public class ProductoController extends HttpServlet {
 
 					int id = Integer.parseInt(request.getParameter("id"));
 					System.out.println("Editar id: " + id);
-					
+
 					ProductoDAO productoDAO = new ProductoDAO();
 					Producto producto = new Producto();
-					
+
 					try {
+
 						producto = productoDAO.getProduct(id);
+						System.out.println(producto);
+
+						request.setAttribute("producto", producto);
+
+						RequestDispatcher requestDispatcher = request.getRequestDispatcher("/views/editar.jsp");
+						requestDispatcher.forward(request, response);
+
 					} catch (SQLException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-					System.out.println(producto);
-					
-				} 
+
+				}
 			}
 		}
 	}
@@ -99,25 +107,59 @@ public class ProductoController extends HttpServlet {
 		String opcion = request.getParameter("opcion");
 		Date fechaActual = new Date();
 
-		ProductoDAO productoDAO = new ProductoDAO();
-		Producto producto = new Producto();
-
-		producto.setNombre(request.getParameter("nombre"));
-		producto.setCantidad(Double.parseDouble(request.getParameter("cantidad")));
-		producto.setPrecio(Double.parseDouble(request.getParameter("precio")));
-
-		/* SETEAMOS LA FECHA ACTUAL */
-		producto.setFechaCrear(new java.sql.Date(fechaActual.getTime()));
-
-		try {
-			productoDAO.createProduct(producto);
-			System.out.println("Registro guardado satisfactoriamente");
-			RequestDispatcher requestDispatcher = request.getRequestDispatcher("/index.jsp");
-			requestDispatcher.forward(request, response);
-		} catch (SQLException e) {
-			e.printStackTrace();
+		
+		if(opcion.equals("guardar")) {
+			
+			ProductoDAO productoDAO = new ProductoDAO();
+			Producto producto = new Producto();
+			
+			producto.setNombre(request.getParameter("nombre"));
+			producto.setCantidad(Double.parseDouble(request.getParameter("cantidad")));
+			producto.setPrecio(Double.parseDouble(request.getParameter("precio")));
+			
+			/* SETEAMOS LA FECHA ACTUAL */
+			producto.setFechaCrear(new java.sql.Date(fechaActual.getTime()));
+			
+			try {
+				productoDAO.createProduct(producto);
+				System.out.println("Registro guardado satisfactoriamente");
+				RequestDispatcher requestDispatcher = request.getRequestDispatcher("/index.jsp");
+				requestDispatcher.forward(request, response);
+				
+				
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}else {
+			if(opcion.equals("editar")) {
+				
+				ProductoDAO productoDAO = new ProductoDAO();
+				Producto producto = new Producto();
+				
+				producto.setId(Integer.parseInt(request.getParameter("id")));
+				producto.setNombre(request.getParameter("nombre"));
+				producto.setCantidad(Double.parseDouble(request.getParameter("cantidad")));
+				producto.setPrecio(Double.parseDouble(request.getParameter("precio")));
+				
+				/*SETEAMOS LA FECHA DE ACTUALIZACION*/
+				producto.setFechaActualizar(new java.sql.Date(fechaActual.getTime()));
+				
+				try {
+					
+					productoDAO.updateProduct(producto);
+					RequestDispatcher requestDispatcher = request.getRequestDispatcher("/index.jsp");
+					requestDispatcher.forward(request, response);
+					System.out.println("Registro editado satisfactoriamente");
+					
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
 		}
+			
 
+		
 	}
 
 }
