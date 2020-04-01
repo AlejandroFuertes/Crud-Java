@@ -10,13 +10,12 @@ public class Producto {
 	private Double precio;
 	private Date fechaCrear;
 	private Date fechaActualizar;
-	
+
 	public Producto() {
-		
+
 	}
-	
-	public Producto(Integer id, String nombre, Double cantidad, Double precio, Date fechaCrear,
-			Date fechaActualizar) {
+
+	public Producto(Integer id, String nombre, Double cantidad, Double precio, Date fechaCrear, Date fechaActualizar) {
 		super();
 		this.id = id;
 		this.nombre = nombre;
@@ -79,7 +78,5 @@ public class Producto {
 		return "Producto [id=" + id + ", nombre=" + nombre + ", cantidad=" + cantidad + ", precio=" + precio
 				+ ", fechaCrear=" + fechaCrear + ", fechaActualizar=" + fechaActualizar + "]";
 	}
-	
-	
-	
+
 }
