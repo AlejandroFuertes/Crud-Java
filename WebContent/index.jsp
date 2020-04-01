@@ -1,10 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 <head>
-
-<meta charset="ISO-8859-1">
+<meta charset="UTF-8">
 <link rel="stylesheet" href="./bootstrap/css/bootstrap.css"
 	type="text/css">
 <title>Menú de Opciones</title>
@@ -12,22 +11,24 @@
 
 <body>
 
-	<h4>Menu de Opciones Productos</h4>
+	<div class="container">
+	<h3>Menu de Opciones Productos</h3>
 
-	<table border="1">
-
-		<tr>
-
-			<td><a href="productos?opcion=crear"> Crear un Producto </a></td>
-
-		</tr>
-		<tr>
-			<td><a href="productos?opcion=listar"> Listar Productos </a></td>
-		</tr>
-		<tr>
-			<td>Obtener un Producto</td>
-		</tr>
-	</table>
-
+		<div class="col-lg-6">
+			<table class="table table-bordered">	
+				<tr>
+		
+					<td><a href="productos?opcion=crear"> Crear un Producto </a></td>
+		
+				</tr>
+				<tr>
+					<td><a href="productos?opcion=listar"> Listar Productos </a></td>
+				</tr>
+				<tr>
+					<td>Obtener un Producto</td>
+				</tr>
+			</table>
+		</div>
+	</div>
 </body>
 </html>

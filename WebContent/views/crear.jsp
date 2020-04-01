@@ -1,41 +1,43 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<!DOCTYPE html>
 <html>
 <head>
-<meta charset="ISO-8859-1">
+<meta charset="UTF-8">
 <title>Crear Producto</title>
-<link rel="stylesheet" href="bootstrap/css/bootstrap.min.css"
+<link rel="stylesheet" href="./bootstrap/css/bootstrap.min.css"
 	type="text/css">
-	<script src="bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="./bootstrap/js/bootstrap.min.js"></script>
 </head>
 <body>
 	<div class="container">
-		<div class="col-lg-6">
+		<div class="col-lg-6" >
+
 			<h3>Crear Producto</h3>
 
 			<form action="productos" method="post">
 				<input type="hidden" name="opcion" value="guardar">
-				<table class="table table-bordered" border="1">
-					<tr>
-						<td>Nombre</td>
-						<td><input class="form-control" type="text" name="nombre"
-							size="50"></td>
-					</tr>
-					<tr>
-						<td>Cantidad</td>
-						<td><input class="form-control" type="text" name="cantidad"
-							size="50"></td>
-					</tr>
-					<tr>
-						<td>Precio</td>
-						<td><input class="form-control" type="text" name="precio"
-							size="50"></td>
-					</tr>
 
-				</table>
-				<button type="submit" class="btn btn-primary" value="Guardar">
-					Guardar</button>
+				<div class="form-group">
+					<label for="ProductName">Nombre</label> <input class="form-control"
+						type="text" name="nombre" size="50"
+						placeholder="Introduzca el nombre del producto">
+				</div>
+
+				<div class="form-group">
+					<label for="ProductQuantity">Cantidad</label> <input
+						class="form-control" type="text" name="cantidad" size="50"
+						placeholder="Introduzca la cantidad disponible">
+				</div>
+
+				<div class="form-group">
+					<label for="ProductPrice">Precio</label> <input
+						class="form-control" type="text" name="precio" size="50"
+						placeholder="Introduzca el precio">
+				</div>
+
+				<button type="submit" class="btn btn-primary" value="Guardar">Guardar</button>
 
 			</form>
 		</div>
