@@ -2,19 +2,21 @@
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html >
-<html>
+<html lang="es">
 <head>
 <meta charset="UTF-8">
 <title>Listar Productos</title>
 <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css"
 	type="text/css">
 <script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="./bootstrap/css/estilos.css" type="text/css">
 </head>
 <body>
+	<br><br>
 	<div class="container">
 	
 		<div class="col-lg8">
-			<h2>Lista de Productos</h2>
+			<h3>Lista de Productos</h3>
 			<a class="btn btn-success" href="productos?opcion=crear">Agregar Nuevo</a>
 			<br><br>
 			<table class="table table-bordered">

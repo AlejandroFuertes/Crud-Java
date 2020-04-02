@@ -2,13 +2,14 @@
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
 <meta charset="UTF-8">
 <title>Editar Producto</title>
 <link rel="stylesheet" href="./bootstrap/css/bootstrap.min.css"
 	type="text/css">
 <script type="text/javascript" src="./bootstrap/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="./bootstrap/css/estilos.css" type="text/css">
 </head>
 <body>
 	<div class="container">
