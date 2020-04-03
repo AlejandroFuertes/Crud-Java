@@ -10,26 +10,27 @@
 <title>Menú de Opciones</title>
 </head>
 
-<body>
+<body style="background: #49EAC3">
 
 	<div class="container">
-	<h3>Menu de Opciones Productos</h3>
-
 		<div class="col-lg-6">
-			<table class="table table-bordered">	
-				<tr>
+			<h3 style="text-align: center">Sistema de Control</h3>
+			<nav class="menu">
+				<ul>
+					<li>Inicio</li>
+					<li> <a style="color: black;"  href="productos?opcion=crear"> Crear un Producto </a> </li>
+					<li> <a style="color: black;" href="productos?opcion=listar"> Listar Productos </a> </li>
+					<li>Acerca de Nosotros</li>
+				</ul>
+				
 		
-					<td><a href="productos?opcion=crear"> Crear un Producto </a></td>
-		
-				</tr>
-				<tr>
-					<td><a href="productos?opcion=listar"> Listar Productos </a></td>
-				</tr>
-				<tr>
-					<td>Obtener un Producto</td>
-				</tr>
-			</table>
+							
+			</nav>
 		</div>
+	</div>
+	
+	<div>
+		<footer>Derechos Reservados 2020-2025</footer>
 	</div>
 </body>
 </html>

@@ -72,7 +72,7 @@ public class ProductoController extends HttpServlet {
 
 		try {
 			productoDAO.deleteProduct(id);
-			RequestDispatcher requestDispatcher = request.getRequestDispatcher("/views/listar.jsp");
+			RequestDispatcher requestDispatcher = request.getRequestDispatcher("/index.jsp");
 			requestDispatcher.forward(request, response);
 		} catch (SQLException e) {
 			e.printStackTrace();

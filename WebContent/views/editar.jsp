@@ -14,36 +14,34 @@
 <body>
 	<div class="container">
 		<div class="col-lg-6">
-			<h3>Editar Producto</h3>
-		
-			<form action="productos" method="post">
-		
-				<c:set var="producto" value="${producto}"></c:set>
-		
-				<input type="hidden" name="opcion" value="editar"> <input
-					type="hidden" name="id" value="${producto.id}">
-				<table class="table table-bordered">
-					<tr>
-						<td class="text-center">Nombre</td>
-						<td class="text-center"><input type="text" name="nombre" size="50"
-							value="${producto.nombre}"></td>
-					</tr>
-					<tr>
-						<td class="text-center">Cantidad</td>
-						<td class="text-center"><input type="text" name="cantidad" size="50"
-							value="${producto.cantidad}"></td>
-					</tr>
-					<tr>
-						<td class="text-center">Precio</td>
-						<td class="text-center"><input type="text" name="precio" size="50"
-							value="${producto.precio}"></td>
-					</tr>
-		
-				</table>
-				
-				<button type="submit" class="btn btn-primary" value="Actualizar">Actualizar</button>
-		
-			</form>
+			<div class="centrarForm">			
+				<form action="productos" method="post">
+					<h3 style="text-align: center">Actualizar Producto</h3>
+					
+					<c:set var="producto" value="${producto}"></c:set>
+			
+					<input type="hidden" name="opcion" value="editar"> <input
+						type="hidden" name="id" value="${producto.id}">
+						
+						<div class = "form-group">
+							<label for="ProductName" >Nombre</label>
+						
+						<input class="form-control" type="text" name="nombre" size="50"
+								value="${producto.nombre}">
+						
+						</div>
+						<div class="form-group">
+							<label for="ProductQuantity">Cantidad</label>
+							<input class="form-control" type="text" name="cantidad" size="50" value="${producto.cantidad}">
+						</div>
+						<div class="form-group">
+							<label for="ProductPrice">Precio</label>
+							<input class="form-control" type="text" name="precio" size="50" value="${producto.precio}">
+						</div>
+					<button type="submit" class="btn btn-primary" value="Actualizar">Actualizar</button>
+			
+				</form>
+			</div>
 		</div>
 	</div>
 </body>

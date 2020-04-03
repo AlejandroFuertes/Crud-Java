@@ -29,26 +29,22 @@
 					<div class="form-group">
 						<label for="ProductName">Nombre</label> <input
 							class="form-control" type="text" name="nombre" size="50"
-							placeholder="Introduzca el nombre del producto">
+							placeholder="Introduzca el nombre del producto" required="required" autofocus="autofocus">
 					</div>
 
 					<div class="form-group">
 						<label for="ProductQuantity">Cantidad</label> <input
-							class="form-control" type="text" name="cantidad" size="50"
-							placeholder="Introduzca la cantidad disponible">
+							class="form-control" type="number" name="cantidad" size="50"
+							placeholder="Introduzca la cantidad disponible" required="required" min = "0">
 					</div>
 
 					<div class="form-group">
 						<label for="ProductPrice">Precio</label> <input
-							class="form-control" type="text" name="precio" size="50"
-							placeholder="Introduzca el precio">
+							class="form-control" type="number" name="precio" size="50"
+							placeholder="Introduzca el precio" required="required" min = "0">
 					</div>
 
 					<button type="submit" class="btn btn-success" value="Guardar">Guardar</button>
-					<button type="submit" class="btn btn-info"
-						style="margin-left: 187px" onclick="productos?opcion=listar">Ver
-						Lista de Productos</button>
-
 				</form>
 			</div>
 		</div>
