@@ -28,7 +28,6 @@ public class ProductoController extends HttpServlet {
 	 */
 	public ProductoController() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	/**
@@ -40,77 +39,87 @@ public class ProductoController extends HttpServlet {
 
 		String opcion = request.getParameter("opcion");
 
-		if (opcion.equals("crear")) {
+		if (opcion != null) {
 
-			System.out.println("Selecciono la opcion crear");
-			RequestDispatcher requestDispatcher = request.getRequestDispatcher("views/crear.jsp");
-			requestDispatcher.forward(request, response);
-		} else {
-			if (opcion.equals("listar")) {
-				ProductoDAO productoDAO = new ProductoDAO();
-				List<Producto> lista = new ArrayList<>();
+			switch (opcion) {
+			case "crear":
+				redireccionaACrearProducto(request, response);
+				break;
 
-				try {
-					lista = productoDAO.getProducts();
+			case "listar":
+				mostrarProductos(request, response);
+				break;
 
-					// IMPRIMO LOS PRODUCTOS EN CONSOLA
-					for (Producto producto : lista) {
-						System.out.println(producto);
-					}
+			case "mostrarEditar":
+				mostrarProducto(request, response);
+				break;
 
-					/* SET ATTRIBUTE ENVIA DATOS AL JSP CON UNA CLAVE */
-					request.setAttribute("lista", lista);
-					RequestDispatcher requestDispatcher = request.getRequestDispatcher("views/listar.jsp");
-					requestDispatcher.forward(request, response);
-				} catch (Exception e) {
-
-				}
-
-				System.out.println("Usted selecciono la opcion Listar");
-			} else {
-				if (opcion.equals("mostrarEditar")) {
-
-					int id = Integer.parseInt(request.getParameter("id"));
-					System.out.println("Editar id: " + id);
-
-					ProductoDAO productoDAO = new ProductoDAO();
-					Producto producto = new Producto();
-
-					try {
-
-						producto = productoDAO.getProduct(id);
-						System.out.println(producto);
-
-						request.setAttribute("producto", producto);
-
-						RequestDispatcher requestDispatcher = request.getRequestDispatcher("/views/editar.jsp");
-						requestDispatcher.forward(request, response);
-
-					} catch (SQLException e) {
-						e.printStackTrace();
-					}
-
-				}else {
-					if(opcion.equals("eliminar")) {
-						
-						ProductoDAO productoDAO = new ProductoDAO();
-						
-						Integer id = Integer.parseInt(request.getParameter("id"));
-						
-						try {
-							productoDAO.deleteProduct(id);
-							System.out.println("Registro eliminado correctamente");
-							
-							RequestDispatcher requestDispatcher = request.getRequestDispatcher("/index.jsp");
-							requestDispatcher.forward(request, response);
-						} catch (SQLException e) {
-							e.printStackTrace();
-						}
-						
-					}
-				}
+			case "eliminar":
+				eliminarProducto(request, response);
+				break;
+				
+			default:
+				break;
 			}
 		}
+	}
+
+	private void eliminarProducto(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
+		Integer id = Integer.parseInt(request.getParameter("id"));
+		ProductoDAO productoDAO = new ProductoDAO();
+
+		try {
+			productoDAO.deleteProduct(id);
+			RequestDispatcher requestDispatcher = request.getRequestDispatcher("/views/listar.jsp");
+			requestDispatcher.forward(request, response);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	private void mostrarProducto(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
+		Integer id = Integer.parseInt(request.getParameter("id"));
+		ProductoDAO productoDAO = new ProductoDAO();
+		Producto producto = new Producto();
+		try {
+			producto = productoDAO.getProduct(id);
+			request.setAttribute("producto", producto);
+			RequestDispatcher requestDispatcher = request.getRequestDispatcher("/views/editar.jsp");
+			requestDispatcher.forward(request, response);
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	private void mostrarProductos(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
+		ProductoDAO productoDAO = new ProductoDAO();
+		List<Producto> listaProducto = new ArrayList<>();
+
+		try {
+			listaProducto = productoDAO.getProducts();
+			request.setAttribute("lista", listaProducto);
+			RequestDispatcher requestDispatcher = request.getRequestDispatcher("/views/listar.jsp");
+			requestDispatcher.forward(request, response);
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	private void redireccionaACrearProducto(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		RequestDispatcher requestDispatcher = request.getRequestDispatcher("/views/crear.jsp");
+		requestDispatcher.forward(request, response);
 	}
 
 	/**
@@ -121,61 +130,71 @@ public class ProductoController extends HttpServlet {
 			throws ServletException, IOException {
 
 		String opcion = request.getParameter("opcion");
+
+		try {
+			switch (opcion) {
+			case "guardar":
+				guardarProducto(request, response);
+				break;
+
+			case "editar":
+				editarProducto(request, response);				
+				
+				break;
+			default:
+				break;
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	private void editarProducto(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		ProductoDAO productoDAO = new ProductoDAO();
+		Producto producto = new Producto();
+		Date fechaActual = new Date();
+		
+		producto.setId(Integer.parseInt(request.getParameter("id")));
+		producto.setNombre(request.getParameter("nombre"));
+		producto.setCantidad(Double.parseDouble(request.getParameter("cantidad")));
+		producto.setPrecio(Double.parseDouble(request.getParameter("precio")));
+		producto.setFechaActualizar(new java.sql.Date(fechaActual.getTime()));
+		
+		try {
+			productoDAO.updateProduct(producto);
+			
+			RequestDispatcher requestDispatcher = request.getRequestDispatcher("/index.jsp");
+			requestDispatcher.forward(request, response);
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		
+	}
+
+	private void guardarProducto(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
+		ProductoDAO productoDAO = new ProductoDAO();
+		Producto producto = new Producto();
 		Date fechaActual = new Date();
 
-		
-		if(opcion.equals("guardar")) {
-			
-			ProductoDAO productoDAO = new ProductoDAO();
-			Producto producto = new Producto();
-			
-			producto.setNombre(request.getParameter("nombre"));
-			producto.setCantidad(Double.parseDouble(request.getParameter("cantidad")));
-			producto.setPrecio(Double.parseDouble(request.getParameter("precio")));
-			
-			/* SETEAMOS LA FECHA ACTUAL */
-			producto.setFechaCrear(new java.sql.Date(fechaActual.getTime()));
-			
-			try {
-				productoDAO.createProduct(producto);
-				System.out.println("Registro guardado satisfactoriamente");
-				RequestDispatcher requestDispatcher = request.getRequestDispatcher("/index.jsp");
-				requestDispatcher.forward(request, response);
-				
-				
-				
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}else {
-			if(opcion.equals("editar")) {
-				
-				ProductoDAO productoDAO = new ProductoDAO();
-				Producto producto = new Producto();
-				
-				producto.setId(Integer.parseInt(request.getParameter("id")));
-				producto.setNombre(request.getParameter("nombre"));
-				producto.setCantidad(Double.parseDouble(request.getParameter("cantidad")));
-				producto.setPrecio(Double.parseDouble(request.getParameter("precio")));
-				
-				/*SETEAMOS LA FECHA DE ACTUALIZACION*/
-				producto.setFechaActualizar(new java.sql.Date(fechaActual.getTime()));
-				
-				try {
-					
-					productoDAO.updateProduct(producto);
-					RequestDispatcher requestDispatcher = request.getRequestDispatcher("/index.jsp");
-					requestDispatcher.forward(request, response);
-					System.out.println("Registro editado satisfactoriamente");
-					
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
-		}
-			
+		producto.setNombre(request.getParameter("nombre"));
+		producto.setCantidad(Double.parseDouble(request.getParameter("cantidad")));
+		producto.setPrecio(Double.parseDouble(request.getParameter("precio")));
+		producto.setFechaCrear(new java.sql.Date(fechaActual.getTime()));
 
-		
+		try {
+			productoDAO.createProduct(producto);
+			RequestDispatcher requestDispatcher = request.getRequestDispatcher("/views/crear.jsp");
+			requestDispatcher.forward(request, response);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
 	}
 
 }

@@ -19,33 +19,36 @@
 <body>
 	<div class="container">
 		<div class="col-lg-6">
-			<div class = "centrarForm">
+			<div class="centrarForm">
 				<form action="productos" method="post">
-				
-					<h3 class="upgradeTitle">Producto</h3>
-					
+
+					<h3 style="text-align: center">Producto</h3>
+
 					<input type="hidden" name="opcion" value="guardar">
-	
+
 					<div class="form-group">
-						<label for="ProductName">Nombre</label> <input class="form-control"
-							type="text" name="nombre" size="50"
+						<label for="ProductName">Nombre</label> <input
+							class="form-control" type="text" name="nombre" size="50"
 							placeholder="Introduzca el nombre del producto">
 					</div>
-	
+
 					<div class="form-group">
 						<label for="ProductQuantity">Cantidad</label> <input
 							class="form-control" type="text" name="cantidad" size="50"
 							placeholder="Introduzca la cantidad disponible">
 					</div>
-	
+
 					<div class="form-group">
 						<label for="ProductPrice">Precio</label> <input
 							class="form-control" type="text" name="precio" size="50"
 							placeholder="Introduzca el precio">
 					</div>
-	
+
 					<button type="submit" class="btn btn-success" value="Guardar">Guardar</button>
-	
+					<button type="submit" class="btn btn-info"
+						style="margin-left: 187px" onclick="productos?opcion=listar">Ver
+						Lista de Productos</button>
+
 				</form>
 			</div>
 		</div>
